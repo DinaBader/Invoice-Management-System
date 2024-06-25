@@ -21,7 +21,7 @@ import { InvoiceModule } from './Invoice/invoice.module';
         password:configService.get('DB_PASSWORD'),
         database:configService.get('DB_NAME'),
         entities:[join(process.cwd(),'dist/**/*.entity.js')],
-        synchronize:true,
+        synchronize:false,
       }),
       inject:[ConfigService],
     }),

@@ -61,7 +61,7 @@ export class InvoiceService{
             if (!invoice) {
                 throw new Error(`Invoice with id ${id} not found`);
             }
-            await this.invoiceRepository.delete(invoice);
+            await this.invoiceRepository.remove(invoice);
             return { message: 'Invoice deleted successfully' };
         }catch(error){
             console.error("Error deleting invoice");
