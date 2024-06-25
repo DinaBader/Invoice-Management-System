@@ -5,6 +5,7 @@ import { ConfigModule,ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InvoiceModule } from './Invoice/invoice.module';
+import { UserModule } from './User/user.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { InvoiceModule } from './Invoice/invoice.module';
       }),
       inject:[ConfigService],
     }),
-    InvoiceModule
+    InvoiceModule,
+    UserModule
 
   ],
   
