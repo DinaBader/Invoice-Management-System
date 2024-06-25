@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({name:'Invoice'})
 export class Invoice{
@@ -21,8 +21,19 @@ export class Invoice{
     Received:number;
 
     @Column()
-    Remaining:number;
+    Remaining:number; 
 
-    @Column()
-    Date:Date;
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date; 
+
+    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+    updatedAt: Date;  
+
+    @BeforeUpdate()
+    updateStatusIfTotalIsZero() {
+        if (this.Total === 0 && this.Status !== 'paid') {
+            this.Status = 'paid';
+        }
+    }
+
 }
