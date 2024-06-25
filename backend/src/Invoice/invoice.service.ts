@@ -30,6 +30,7 @@ export class InvoiceService{
             throw error;
         }
     }
+    
     async editInvoice(id:number,dto:Partial<Invoice>):Promise<Invoice|undefined>{
         try{        
             const invoice=await this.invoiceRepository.findOne({where:{id}});
@@ -39,17 +40,6 @@ export class InvoiceService{
 
         }catch(error){
             console.error('Error getting invoice:',error);
-            throw error;
-        }
-    }
-
-    async seeStatus(){
-        try{
-            const invoices=await this.invoiceRepository.find();
-            const statuses = invoices.map(invoice => invoice.Status);
-            return statuses;
-        }catch(error){
-            console.error("Error fetching invoices :",error);
             throw error;
         }
     }
