@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { InvoiceService } from "./invoice.service";
+import { Invoice } from "./invoice.entity";
 
 @Controller('Invoice')
 export class InvoiceController{
@@ -21,7 +22,7 @@ export class InvoiceController{
     }
 
     @Get('status')
-    getByStatus(@Body() status){
+    async getByStatus(@Query('status') status: string): Promise<Invoice[]> {
         return this.invoiceService.getInvoiceByStatus(status);
     }
 
