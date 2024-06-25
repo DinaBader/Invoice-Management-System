@@ -1,0 +1,34 @@
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: dinabader
+      MYSQL_DATABASE: invoice-managment-system
+      # MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+
+  keycloak:
+    build:
+      context: .
+      dockerfile: Dockerfile.keycloak
+    container_name: keycloak_container
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: dina
+
+      MYSQL_DATABASE: invoice-managment-system
+      MYSQL_ROOT_PASSWORD: dinabader
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

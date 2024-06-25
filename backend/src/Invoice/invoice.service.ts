@@ -42,4 +42,41 @@ export class InvoiceService{
             throw error;
         }
     }
+
+    async seeStatus(){
+        try{
+            const invoices=await this.invoiceRepository.find();
+            const statuses = invoices.map(invoice => invoice.Status);
+            return statuses;
+        }catch(error){
+            console.error("Error fetching invoices :",error);
+            throw error;
+        }
+    }
+
+    async getInvoiceByStatus(status:String){
+        try{
+            const invoices=await this.invoiceRepository.find();
+            const filteredInvoices =invoices.filter(invoice=>invoice.Status === status);
+            return filteredInvoices ;
+        }catch(error){
+            console.error("Error fetching invoices by status:", error);
+            throw error;
+        }
+    }
+
+    async deleteInvoice(id:number){
+        try{
+            const invoice=await this.invoiceRepository.findOne({where:{id}});
+            if (!invoice) {
+                throw new Error(`Invoice with id ${id} not found`);
+            }
+            await this.invoiceRepository.delete(invoice);
+            return { message: 'Invoice deleted successfully' };
+        }catch(error){
+            console.error("Error deleting invoice");
+            throw error;
+        }
+    }
+
 }
