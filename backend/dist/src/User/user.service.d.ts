@@ -1,6 +1,6 @@
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
-import { AuthService } from "authentication/auth.service";
+import { AuthService } from "services/auth.service";
 export declare class UserService {
     private readonly userRepository;
     private readonly authService;

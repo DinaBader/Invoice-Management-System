@@ -18,7 +18,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./user.entity");
 const typeorm_2 = require("typeorm");
 const keycloak_admin_config_1 = require("../../keycloak-admin.config");
-const auth_service_1 = require("../../authentication/auth.service");
+const auth_service_1 = require("../../services/auth.service");
+const bcrypt = require("bcrypt");
 let UserService = class UserService {
     constructor(userRepository, authService) {
         this.userRepository = userRepository;
@@ -28,6 +29,7 @@ let UserService = class UserService {
         try {
             const token = await this.authService.getToken();
             keycloak_admin_config_1.keycloakAdmin.setAccessToken(token);
+            const hashedPassword = await bcrypt.hash(password, 10);
             const userData = {
                 "username": username,
                 "firstName": firstName,
@@ -37,7 +39,7 @@ let UserService = class UserService {
                 "credentials": [
                     {
                         "type": "password",
-                        "value": password,
+                        "value": hashedPassword,
                         "temporary": false
                     }
                 ]
@@ -46,7 +48,7 @@ let UserService = class UserService {
             await keycloak_admin_config_1.keycloakAdmin.users.create(userData);
             const newUser = this.userRepository.create({
                 username,
-                password,
+                password: hashedPassword,
                 email,
                 firstName,
                 lastName,

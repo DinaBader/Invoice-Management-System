@@ -12,7 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./user.entity");
 const user_controller_1 = require("./user.controller");
 const user_service_1 = require("./user.service");
-const auth_service_1 = require("../../authentication/auth.service");
+const auth_service_1 = require("../../services/auth.service");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;

@@ -3,7 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
 import { keycloakAdmin } from "keycloak-admin.config";
-import { AuthService } from "authentication/auth.service";
+import { AuthService } from "services/auth.service";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService{
@@ -17,7 +18,7 @@ export class UserService{
         try {
             const token = await this.authService.getToken();
             keycloakAdmin.setAccessToken(token);
-    
+            const hashedPassword = await bcrypt.hash(password, 10);
             const userData = {
                 "username": username,
                 "firstName": firstName,
@@ -27,7 +28,7 @@ export class UserService{
                 "credentials": [
                     {
                         "type": "password",
-                        "value": password,
+                        "value": hashedPassword,
                         "temporary": false
                     }
                 ]
@@ -39,7 +40,7 @@ export class UserService{
     
             const newUser = this.userRepository.create({
                 username,
-                password,  
+                password:hashedPassword,  
                 email,
                 firstName,  
                 lastName,   
