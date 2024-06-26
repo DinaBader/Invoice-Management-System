@@ -17,21 +17,25 @@ export class InvoiceController{
     }
 
     @Get()
+    @Roles('admin')
     findAll(){
         return this.invoiceService.findAllInvoices();
     }
 
     @Put(':id')
+    @Roles('admin')
     update(@Body() dto,@Param() id:number){
         return this.invoiceService.editInvoice(id,dto);
     }
 
     @Get('status')
+    @Roles('admin')
     async getByStatus(@Query('status') status: string): Promise<Invoice[]> {
         return this.invoiceService.getInvoiceByStatus(status);
     }
 
     @Delete(':id')
+    @Roles('admin')
     delete(@Param() id:number){
         return this.invoiceService.deleteInvoice(id);
     }
