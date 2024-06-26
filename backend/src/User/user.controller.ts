@@ -9,9 +9,6 @@ export class Usercontroller{
 
     @Post()
     async create(@Body() userData: any) {
-        const { firstName, lastName, username, password, email } = userData;
-        await this.userService.create(username, password, email, firstName, lastName);
-        return { message: "User registered successfully" };
     }
     
 }

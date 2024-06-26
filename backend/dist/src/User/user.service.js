@@ -17,50 +17,26 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./user.entity");
 const typeorm_2 = require("typeorm");
-const keycloak_admin_config_1 = require("../../keycloak-admin.config");
-const auth_service_1 = require("../../services/auth.service");
-const bcrypt = require("bcrypt");
+const password_service_1 = require("../../services/password.service");
 let UserService = class UserService {
-    constructor(userRepository, authService) {
+    constructor(userRepository, passwordService) {
         this.userRepository = userRepository;
-        this.authService = authService;
+        this.passwordService = passwordService;
     }
-    async create(username, password, email, firstName, lastName) {
-        try {
-            const token = await this.authService.getToken();
-            keycloak_admin_config_1.keycloakAdmin.setAccessToken(token);
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const userData = {
-                "username": username,
-                "firstName": firstName,
-                "lastName": lastName,
-                "email": email,
-                "enabled": true,
-                "credentials": [
-                    {
-                        "type": "password",
-                        "value": hashedPassword,
-                        "temporary": false
-                    }
-                ]
-            };
-            console.log("Creating user with data:", userData);
-            await keycloak_admin_config_1.keycloakAdmin.users.create(userData);
-            const newUser = this.userRepository.create({
-                username,
-                password: hashedPassword,
-                email,
-                firstName,
-                lastName,
-            });
-            await this.userRepository.save(newUser);
-            return newUser;
-        }
-        catch (error) {
-            console.error(`Failed to register user: ${error.message}`);
-            console.error(`Error Response:`, error.response?.data);
-            throw new Error("Failed to register user: " + error.message);
-        }
+    async findOne(username) {
+        const user = await this.userRepository.findOne({ where: { username } });
+        console.log(`User found: ${JSON.stringify(user)}`);
+        return user;
+    }
+    async createUser(username, hashedPassword, email, firstName, lastName) {
+        const newUser = this.userRepository.create({
+            username,
+            password: hashedPassword,
+            email,
+            firstName,
+            lastName,
+        });
+        return this.userRepository.save(newUser);
     }
 };
 exports.UserService = UserService;
@@ -68,6 +44,6 @@ exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        auth_service_1.AuthService])
+        password_service_1.PasswordService])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

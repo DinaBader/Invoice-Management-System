@@ -1,9 +1,10 @@
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
-import { AuthService } from "services/auth.service";
+import { PasswordService } from "services/password.service";
 export declare class UserService {
     private readonly userRepository;
-    private readonly authService;
-    constructor(userRepository: Repository<User>, authService: AuthService);
-    create(username: string, password: string, email: string, firstName: string, lastName: string): Promise<User>;
+    private readonly passwordService;
+    constructor(userRepository: Repository<User>, passwordService: PasswordService);
+    findOne(username: string): Promise<User | undefined>;
+    createUser(username: string, hashedPassword: string, email: string, firstName: string, lastName: string): Promise<User>;
 }

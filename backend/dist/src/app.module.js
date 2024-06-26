@@ -15,6 +15,7 @@ const path_1 = require("path");
 const typeorm_1 = require("@nestjs/typeorm");
 const invoice_module_1 = require("./Invoice/invoice.module");
 const user_module_1 = require("./User/user.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -39,7 +40,8 @@ exports.AppModule = AppModule = __decorate([
                 inject: [config_1.ConfigService],
             }),
             invoice_module_1.InvoiceModule,
-            user_module_1.UserModule
+            user_module_1.UserModule,
+            auth_module_1.AuthModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

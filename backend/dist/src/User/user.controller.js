@@ -20,9 +20,6 @@ let Usercontroller = class Usercontroller {
         this.userService = userService;
     }
     async create(userData) {
-        const { firstName, lastName, username, password, email } = userData;
-        await this.userService.create(username, password, email, firstName, lastName);
-        return { message: "User registered successfully" };
     }
 };
 exports.Usercontroller = Usercontroller;

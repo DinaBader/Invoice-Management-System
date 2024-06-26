@@ -6,6 +6,7 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InvoiceModule } from './Invoice/invoice.module';
 import { UserModule } from './User/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { UserModule } from './User/user.module';
       inject:[ConfigService],
     }),
     InvoiceModule,
-    UserModule
+    UserModule,
+    AuthModule
 
   ],
   
