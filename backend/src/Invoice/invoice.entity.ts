@@ -29,11 +29,5 @@ export class Invoice{
     @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;  
 
-    @BeforeUpdate()
-    updateStatusIfTotalIsZero() {
-        if (this.Total === 0 && this.Status !== 'paid') {
-            this.Status = 'paid';
-        }
-    }
 
 }

@@ -7,8 +7,5 @@ export class Usercontroller{
         private readonly userService:UserService
     ){}
 
-    @Post()
-    async create(@Body() userData: any) {
-    }
     
 }
