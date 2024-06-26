@@ -1,4 +1,12 @@
 import { AuthService } from './auth.service';
+export declare class SignUpDto {
+    username: string;
+    password: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    roles: string[];
+}
 export declare class AuthController {
     private authService;
     constructor(authService: AuthService);

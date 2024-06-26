@@ -11,6 +11,14 @@ import {
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
+export class SignUpDto {
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roles: string[]; // Ensure roles are properly defined
+}
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -24,7 +32,7 @@ export class AuthController {
 
   @Post('signup')
   signUp(@Body() signUpDto :Record<string,any>){
-    return this.authService.signUp(signUpDto.username,signUpDto.password,signUpDto.email,signUpDto.firstName,signUpDto.lastName);
-
+    const { username, password, email, firstName, lastName, roles } = signUpDto;
+    return this.authService.signUp(username, password, email, firstName, lastName, roles);
   }
 }

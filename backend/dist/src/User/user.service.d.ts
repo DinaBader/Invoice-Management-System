@@ -6,5 +6,5 @@ export declare class UserService {
     private readonly passwordService;
     constructor(userRepository: Repository<User>, passwordService: PasswordService);
     findOne(username: string): Promise<User | undefined>;
-    createUser(username: string, hashedPassword: string, email: string, firstName: string, lastName: string): Promise<User>;
+    createUser(username: string, hashedPassword: string, email: string, firstName: string, lastName: string, roles: string[]): Promise<User>;
 }

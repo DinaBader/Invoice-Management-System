@@ -9,7 +9,7 @@ export declare class AuthService {
     signIn(username: string, pass: string): Promise<{
         access_token: string;
     }>;
-    signUp(username: string, pass: string, email: string, firstName: string, lastName: string): Promise<{
+    signUp(username: string, pass: string, email: string, firstName: string, lastName: string, roles?: string[]): Promise<{
         access_token: string;
     }>;
 }

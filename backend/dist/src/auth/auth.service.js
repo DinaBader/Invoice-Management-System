@@ -23,27 +23,25 @@ let AuthService = class AuthService {
     async signIn(username, pass) {
         const user = await this.usersService.findOne(username);
         if (!user) {
-            console.log(`User not found: ${username}`);
             throw new common_1.UnauthorizedException('User not found');
         }
         const isPasswordValid = await this.passwordService.comparePasswords(pass, user.password);
         if (!isPasswordValid) {
-            console.log('Invalid password');
             throw new common_1.UnauthorizedException('Invalid password');
         }
-        const payload = { sub: user.id, username: user.username };
+        const payload = { sub: user.id, username: user.username, roles: user.roles };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
     }
-    async signUp(username, pass, email, firstName, lastName) {
+    async signUp(username, pass, email, firstName, lastName, roles = ['user']) {
         const existingUser = await this.usersService.findOne(username);
         if (existingUser) {
             throw new common_1.UnauthorizedException('Username already exists');
         }
         const hashedPassword = await this.passwordService.hashPassword(pass);
-        const user = await this.usersService.createUser(username, hashedPassword, email, firstName, lastName);
-        const payload = { sub: user.id, username: user.username };
+        const user = await this.usersService.createUser(username, hashedPassword, email, firstName, lastName, roles);
+        const payload = { sub: user.id, username: user.username, roles: user.roles };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };

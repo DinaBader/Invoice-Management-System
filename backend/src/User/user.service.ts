@@ -18,17 +18,23 @@ export class UserService{
       console.log(`User found: ${JSON.stringify(user)}`);
       return user;
     }
-                    
-    async createUser(username: string, hashedPassword: string, email: string, firstName: string, lastName: string,): Promise<User> {
+    async createUser(
+      username: string,
+      hashedPassword: string,
+      email: string,
+      firstName: string,
+      lastName: string,
+      roles: string[], 
+    ): Promise<User> {
       const newUser = this.userRepository.create({
         username,
         password: hashedPassword,
         email,
         firstName,
         lastName,
+        roles,
       });
       return this.userRepository.save(newUser);
     }
-  
               
 }

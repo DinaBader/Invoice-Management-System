@@ -14,17 +14,15 @@ export class AuthService {
   async signIn(username: string, pass: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findOne(username);
     if (!user) {
-      console.log(`User not found: ${username}`);
       throw new UnauthorizedException('User not found');
     }
 
     const isPasswordValid = await this.passwordService.comparePasswords(pass, user.password);
     if (!isPasswordValid) {
-      console.log('Invalid password');
       throw new UnauthorizedException('Invalid password');
     }
 
-    const payload = { sub: user.id, username: user.username };
+    const payload = { sub: user.id, username: user.username, roles: user.roles };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
@@ -36,6 +34,7 @@ export class AuthService {
     email: string,
     firstName: string,
     lastName: string,
+    roles: string[] = ['user']
   ): Promise<{ access_token: string }> {
     const existingUser = await this.usersService.findOne(username);
     if (existingUser) {
@@ -43,9 +42,16 @@ export class AuthService {
     }
 
     const hashedPassword = await this.passwordService.hashPassword(pass);
-    const user = await this.usersService.createUser(username, hashedPassword, email, firstName, lastName);
+    const user = await this.usersService.createUser(
+      username,
+      hashedPassword,
+      email,
+      firstName,
+      lastName,
+      roles
+    );
 
-    const payload = { sub: user.id, username: user.username };
+    const payload = { sub: user.id, username: user.username, roles: user.roles };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

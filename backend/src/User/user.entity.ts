@@ -19,5 +19,8 @@ export class User{
 
    @Column()
    password:string
+
+   @Column('simple-array') 
+   roles: string[];
    
 }

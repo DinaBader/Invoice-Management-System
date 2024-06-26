@@ -38,6 +38,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.Column)('simple-array'),
+    __metadata("design:type", Array)
+], User.prototype, "roles", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)({ name: 'user' })
 ], User);

@@ -1,12 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { InvoiceService } from "./invoice.service";
 import { Invoice } from "./invoice.entity";
+import { Roles } from "src/auth/roles.decorator";
+import { RolesGuard } from "src/auth/role.guard";
+import { AuthGuard } from "src/auth/auth.guard";
 
 @Controller('Invoice')
+@UseGuards(AuthGuard, RolesGuard)
 export class InvoiceController{
     constructor(private readonly invoiceService:InvoiceService){};
 
     @Post()
+    @Roles('admin')
     create(@Body() dto){
         return this.invoiceService.createInvoice(dto);
     }

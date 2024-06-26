@@ -12,9 +12,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
+exports.AuthController = exports.SignUpDto = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+class SignUpDto {
+}
+exports.SignUpDto = SignUpDto;
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -23,7 +26,8 @@ let AuthController = class AuthController {
         return this.authService.signIn(signInDto.username, signInDto.password);
     }
     signUp(signUpDto) {
-        return this.authService.signUp(signUpDto.username, signUpDto.password, signUpDto.email, signUpDto.firstName, signUpDto.lastName);
+        const { username, password, email, firstName, lastName, roles } = signUpDto;
+        return this.authService.signUp(username, password, email, firstName, lastName, roles);
     }
 };
 exports.AuthController = AuthController;

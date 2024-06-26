@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InvoiceController = void 0;
 const common_1 = require("@nestjs/common");
 const invoice_service_1 = require("./invoice.service");
+const roles_decorator_1 = require("../auth/roles.decorator");
+const role_guard_1 = require("../auth/role.guard");
+const auth_guard_1 = require("../auth/auth.guard");
 let InvoiceController = class InvoiceController {
     constructor(invoiceService) {
         this.invoiceService = invoiceService;
@@ -39,6 +42,7 @@ let InvoiceController = class InvoiceController {
 exports.InvoiceController = InvoiceController;
 __decorate([
     (0, common_1.Post)(),
+    (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -74,6 +78,7 @@ __decorate([
 ], InvoiceController.prototype, "delete", null);
 exports.InvoiceController = InvoiceController = __decorate([
     (0, common_1.Controller)('Invoice'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, role_guard_1.RolesGuard),
     __metadata("design:paramtypes", [invoice_service_1.InvoiceService])
 ], InvoiceController);
 //# sourceMappingURL=invoice.controller.js.map
