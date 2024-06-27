@@ -15,12 +15,7 @@ export class User{
    lastName:string
    
    @Column()
-   email:String
-
-   @Column()
    password:string
 
-   @Column('simple-array') 
-   roles: string[];
    
 }

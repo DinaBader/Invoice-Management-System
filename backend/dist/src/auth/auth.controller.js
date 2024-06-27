@@ -26,8 +26,8 @@ let AuthController = class AuthController {
         return this.authService.signIn(signInDto.username, signInDto.password);
     }
     signUp(signUpDto) {
-        const { username, password, email, firstName, lastName, roles } = signUpDto;
-        return this.authService.signUp(username, password, email, firstName, lastName, roles);
+        const { username, password, firstName, lastName } = signUpDto;
+        return this.authService.signUp(username, password, firstName, lastName);
     }
 };
 exports.AuthController = AuthController;

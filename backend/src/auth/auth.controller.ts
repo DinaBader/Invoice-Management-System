@@ -5,19 +5,14 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Request,
-  UseGuards
 } from '@nestjs/common';
-import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
 export class SignUpDto {
   username: string;
   password: string;
-  email: string;
   firstName: string;
   lastName: string;
-  roles: string[]; // Ensure roles are properly defined
 }
 @Controller('auth')
 export class AuthController {
@@ -32,7 +27,7 @@ export class AuthController {
 
   @Post('signup')
   signUp(@Body() signUpDto :Record<string,any>){
-    const { username, password, email, firstName, lastName, roles } = signUpDto;
-    return this.authService.signUp(username, password, email, firstName, lastName, roles);
+    const { username, password, firstName, lastName} = signUpDto;
+    return this.authService.signUp(username, password, firstName, lastName);
   }
 }

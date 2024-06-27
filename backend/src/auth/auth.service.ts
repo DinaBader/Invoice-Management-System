@@ -22,7 +22,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password');
     }
 
-    const payload = { sub: user.id, username: user.username, roles: user.roles };
+    const payload = { sub: user.id, username: user.username };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
@@ -31,10 +31,8 @@ export class AuthService {
   async signUp(
     username: string,
     pass: string,
-    email: string,
     firstName: string,
     lastName: string,
-    roles: string[] = ['user']
   ): Promise<{ access_token: string }> {
     const existingUser = await this.usersService.findOne(username);
     if (existingUser) {
@@ -45,13 +43,11 @@ export class AuthService {
     const user = await this.usersService.createUser(
       username,
       hashedPassword,
-      email,
       firstName,
       lastName,
-      roles
     );
 
-    const payload = { sub: user.id, username: user.username, roles: user.roles };
+    const payload = { sub: user.id, username: user.username};
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

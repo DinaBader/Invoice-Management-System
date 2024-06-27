@@ -8,5 +8,4 @@ export declare class Invoice {
     Remaining: number;
     createdAt: Date;
     updatedAt: Date;
-    updateStatusIfTotalIsZero(): void;
 }

@@ -3,7 +3,5 @@ export declare class User {
     username: string;
     firstName: string;
     lastName: string;
-    email: String;
     password: string;
-    roles: string[];
 }

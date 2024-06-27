@@ -28,14 +28,12 @@ let UserService = class UserService {
         console.log(`User found: ${JSON.stringify(user)}`);
         return user;
     }
-    async createUser(username, hashedPassword, email, firstName, lastName, roles) {
+    async createUser(username, hashedPassword, firstName, lastName) {
         const newUser = this.userRepository.create({
             username,
             password: hashedPassword,
-            email,
             firstName,
             lastName,
-            roles,
         });
         return this.userRepository.save(newUser);
     }

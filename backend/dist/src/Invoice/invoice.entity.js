@@ -12,11 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Invoice = void 0;
 const typeorm_1 = require("typeorm");
 let Invoice = class Invoice {
-    updateStatusIfTotalIsZero() {
-        if (this.Total === 0 && this.Status !== 'paid') {
-            this.Status = 'paid';
-        }
-    }
 };
 exports.Invoice = Invoice;
 __decorate([
@@ -55,12 +50,6 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' }),
     __metadata("design:type", Date)
 ], Invoice.prototype, "updatedAt", void 0);
-__decorate([
-    (0, typeorm_1.BeforeUpdate)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], Invoice.prototype, "updateStatusIfTotalIsZero", null);
 exports.Invoice = Invoice = __decorate([
     (0, typeorm_1.Entity)({ name: 'Invoice' })
 ], Invoice);

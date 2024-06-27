@@ -21,18 +21,14 @@ export class UserService{
     async createUser(
       username: string,
       hashedPassword: string,
-      email: string,
       firstName: string,
       lastName: string,
-      roles: string[], 
     ): Promise<User> {
       const newUser = this.userRepository.create({
         username,
         password: hashedPassword,
-        email,
         firstName,
         lastName,
-        roles,
       });
       return this.userRepository.save(newUser);
     }

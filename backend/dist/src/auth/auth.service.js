@@ -29,19 +29,19 @@ let AuthService = class AuthService {
         if (!isPasswordValid) {
             throw new common_1.UnauthorizedException('Invalid password');
         }
-        const payload = { sub: user.id, username: user.username, roles: user.roles };
+        const payload = { sub: user.id, username: user.username };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
     }
-    async signUp(username, pass, email, firstName, lastName, roles = ['user']) {
+    async signUp(username, pass, firstName, lastName) {
         const existingUser = await this.usersService.findOne(username);
         if (existingUser) {
             throw new common_1.UnauthorizedException('Username already exists');
         }
         const hashedPassword = await this.passwordService.hashPassword(pass);
-        const user = await this.usersService.createUser(username, hashedPassword, email, firstName, lastName, roles);
-        const payload = { sub: user.id, username: user.username, roles: user.roles };
+        const user = await this.usersService.createUser(username, hashedPassword, firstName, lastName);
+        const payload = { sub: user.id, username: user.username };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
