@@ -3,8 +3,8 @@
       <v-row justify="center">
         <v-col cols="12" sm="8" md="6" lg="4">
             <p class="header-title">Invoice Managment System</p>
-          <div class="login-container">
-            <p class="login-title">Login</p>
+          <div class="form-container">
+            <p class="form-title">Login</p>
             <v-form @submit.prevent="handleLogin">
               <v-text-field
                 v-model="username"
@@ -18,7 +18,10 @@
                 type="password"
               ></v-text-field>
               <v-btn class="mt-2" type="submit" block>Submit</v-btn>
-            </v-form>       
+            </v-form>     
+            <NuxtLink to="/register">
+              <v-btn class="register-button" >Register </v-btn>
+            </NuxtLink>  
           </div>
         </v-col>
       </v-row>
@@ -37,7 +40,10 @@
     methods: {
       async handleLogin() {
         try {
-          const response = await loginUser(this.username, this.password);
+          const accessToken = await loginUser(this.username, this.password);
+          console.log('Access Token:', accessToken); 
+          localStorage.setItem('accessToken',accessToken);
+          this.$router.push({ path: '/dashboard' });
         } catch (error) {
           console.error('Error Logging in:', error);
         }
