@@ -13,13 +13,13 @@ export class InvoiceController{
         return this.invoiceService.createInvoice(dto);
     }
 
-    @Get()
+    @Get('/get')
     findAll(){
         return this.invoiceService.findAllInvoices();
     }
 
     @Put(':id')
-    update(@Body() dto,@Param() id:number){
+    update(@Body() dto,@Param('id') id:number){
         return this.invoiceService.editInvoice(id,dto);
     }
 
@@ -29,7 +29,7 @@ export class InvoiceController{
     }
 
     @Delete(':id')
-    delete(@Param() id:number){
+    delete(@Param('id') id:number){
         return this.invoiceService.deleteInvoice(id);
     }
 }
