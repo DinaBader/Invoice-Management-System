@@ -8,12 +8,10 @@
             <v-form @submit.prevent="handleLogin">
               <v-text-field
                 v-model="username"
-                :rules="rules"
                 label="Username"
               ></v-text-field>
               <v-text-field
                 v-model="password"
-                :rules="rules"
                 label="Password"
                 type="password"
               ></v-text-field>
