@@ -23,7 +23,7 @@
           <td>{{ item.Remaining }}</td>
           <td>{{ item.Total }}</td>
           <td>
-            <v-icon @click="deleteInvoice(item.id)" class="icon-spacing">mdi-delete</v-icon>
+            <v-icon @click="openDeleteDialog(item)" class="icon-spacing">mdi-delete</v-icon>
             <v-icon @click="openEditDialog(item)" class="icon-spacing">mdi-pencil</v-icon>
           </td>
         </tr>
@@ -34,28 +34,37 @@
       v-if="selectedInvoice"
       :invoice="selectedInvoice"
       :is-dialog-open="isDialogOpen"
-      @update:isDialogOpen="updateDialogOpen"
+      @update:is-dialog-open="updateDialogOpen"
       @close-dialog="closeEditDialog"
     ></edit-invoice>
+
+    <delete-invoice
+      v-if="selectedInvoiceToDelete"
+      :invoice="selectedInvoiceToDelete"
+      :is-dialog-open="isDialogOpenDelete"
+      @update:is-dialog-open="updateDialogOpenDelete"
+      @close-dialog="closeDeleteDialog"
+    ></delete-invoice>
   </v-container>
 </template>
 
 <script>
 import axios from 'axios';
-import { mdiDelete, mdiPencil } from '@mdi/js';
 import EditInvoice from '@/components/EditInvoice.vue';
+import DeleteInvoice from '@/components/DeleteInvoice.vue';
 
 export default {
   components: {
     EditInvoice,
+    DeleteInvoice
   },
   data() {
     return {
       invoices: [],
-      mdiPencil,
-      mdiDelete,
       isDialogOpen: false,
+      isDialogOpenDelete: false,
       selectedInvoice: null,
+      selectedInvoiceToDelete: null,
     };
   },
   created() {
@@ -80,7 +89,6 @@ export default {
         console.error('Error fetching data:', error);
       }
     },
-    
     deleteInvoice(id) {
       console.log('Delete invoice with id:', id);
     },
@@ -88,20 +96,31 @@ export default {
       this.selectedInvoice = invoice;
       this.isDialogOpen = true;
     },
+    openDeleteDialog(invoice) {
+      this.selectedInvoiceToDelete = invoice;
+      this.isDialogOpenDelete = true;
+    },
     updateDialogOpen(value) {
       this.isDialogOpen = value;
+    },
+    updateDialogOpenDelete(value) {
+      this.isDialogOpenDelete = value;
     },
     closeEditDialog() {
       this.isDialogOpen = false;
       this.selectedInvoice = null;
     },
+    closeDeleteDialog() {
+      this.isDialogOpenDelete = false;
+      this.selectedInvoiceToDelete = null;
+    }
   },
 };
 </script>
 
 <style scoped>
 .icon-spacing {
-  margin-right: 8px; 
-  vertical-align: middle; 
+  margin-right: 8px;
+  vertical-align: middle;
 }
 </style>
