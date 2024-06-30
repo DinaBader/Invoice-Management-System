@@ -5,7 +5,6 @@
     <v-main>
       <v-container>
         <v-table>
-          <!-- Table content -->
           <thead>
             <tr>
               <th class="text-left">Invoice nbr</th>
@@ -59,13 +58,13 @@
 import axios from 'axios';
 import EditInvoice from '@/components/EditInvoice.vue';
 import DeleteInvoice from '@/components/DeleteInvoice.vue';
-import AppDrawer from '@/components/NavigationDrawer.vue'; // Import the AppDrawer component
+import AppDrawer from '@/components/NavigationDrawer.vue'; 
 
 export default {
   components: {
     EditInvoice,
     DeleteInvoice,
-    AppDrawer, // Register the AppDrawer component
+    AppDrawer, 
   },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer app         image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+    <v-navigation-drawer app   image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
 >
       <v-list>
         <v-list-item>
@@ -8,7 +8,9 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
-        <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="inbox"></v-list-item>
+        <NuxtLink to="/dashboard" @click="goToDashboard" class="custom-link">
+          <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="inbox"></v-list-item>
+        </NuxtLink>
         <NuxtLink to="/create" @click="goToCreate" class="custom-link">
             <v-list-item prepend-icon="mdi-plus" title="Create Invoice" value="createInvoice"></v-list-item>
          </NuxtLink>
