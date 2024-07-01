@@ -61,6 +61,7 @@ export default {
           },
         });
         console.log('Updated invoice:', response.data);
+        this.$router.go(0);
         this.$emit('update:isDialogOpen', false);
       } catch (error) {
         console.error('Error updating invoice:', error);

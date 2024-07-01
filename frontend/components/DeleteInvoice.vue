@@ -46,7 +46,7 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Deleted invoice:', response.data);
+        this.$router.go(0);
         this.$emit('update:isDialogOpen', false); 
         this.$emit('close-dialog'); 
       } catch (error) {

@@ -3,7 +3,7 @@
       <app-drawer></app-drawer>
       <v-sheet class="mx-auto create-container" width="800">
           <p class="header">Create Invoice</p>
-        <v-form @submit.prevent="submitForm">
+        <v-form ref="CreateInvoiceForm" @submit.prevent="submitForm">
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
@@ -73,13 +73,28 @@
         rules: [value => !!value || 'Required.']
       }
     },
-    methods:{
-        async submitForm(){
-            try{
-                await createInvoice(this.customername, this.itemdescription, this.total, this.received, this.remaining,this.status);
-                this.$router.push({path:'/dashboard'});
-            }catch(error){
-                console.error("Error creating invoice: ",error);
+    methods: {
+        async submitForm() {
+            const isValid = await this.$refs.CreateInvoiceForm.validate();
+            
+            if (!isValid) {
+            console.log('Form is not valid');
+            return;
+            }
+
+            try {
+            await createInvoice(
+                this.customername,
+                this.itemdescription,
+                this.total,
+                this.received,
+                this.remaining,
+                this.status
+            );
+
+            this.$router.push({ path: '/dashboard' });
+            } catch (error) {
+            console.error('Error creating invoice: ', error);
             }
         },
     }
