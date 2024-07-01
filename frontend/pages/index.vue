@@ -18,6 +18,7 @@
                   :rules="passwordRules"
                   type="password"
                 ></v-text-field>
+                <v-alert v-if="loginError" type="error">{{ loginError }}</v-alert>
                 <v-btn class="mt-2" type="submit" block>Submit</v-btn>
               </v-form>     
               <NuxtLink to="/register">
@@ -48,7 +49,8 @@
             if(value) return true
             return "You must enter a Password"
           }
-        ]
+        ],
+        loginError: ''
       };
     },
     methods: {
@@ -65,6 +67,7 @@
           this.$router.push({ path: '/dashboard' });
         } catch (error) {
           console.error('Error Logging in:', error);
+          this.loginError = 'Invalid username or password. Please try again.';
         }
       }
     }
