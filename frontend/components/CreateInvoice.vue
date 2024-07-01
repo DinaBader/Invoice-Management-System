@@ -56,10 +56,9 @@ export default {
       }
     },
     closeDialog() {
-      this.$emit('update:isDialogOpen', false); // Emit event to update prop in parent
+      this.$emit('update:isDialogOpen', false); 
     },
     emitCloseDialogEvent(value) {
-      // Handle dialog closing event
       if (!value) {
         this.$emit('update:isDialogOpen', false);
       }

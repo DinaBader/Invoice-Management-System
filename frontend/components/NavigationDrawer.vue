@@ -32,6 +32,12 @@
             }catch(error){
                 console.error("couldnt remove token",error);
             }
+        },
+        goToDashboard(){
+          console.log(" to dashboard");
+        },
+        goToCreate(){
+          console.log(" to create")
         }
     }
   };
