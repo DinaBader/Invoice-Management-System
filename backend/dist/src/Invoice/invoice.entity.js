@@ -21,10 +21,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Invoice.prototype, "Description", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
 ], Invoice.prototype, "CustomerName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
@@ -43,13 +39,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Invoice.prototype, "Remaining", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Invoice.prototype, "DueDate", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
     __metadata("design:type", Date)
 ], Invoice.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' }),
-    __metadata("design:type", Date)
-], Invoice.prototype, "updatedAt", void 0);
 exports.Invoice = Invoice = __decorate([
     (0, typeorm_1.Entity)({ name: 'Invoice' })
 ], Invoice);

@@ -37,6 +37,16 @@ let UserService = class UserService {
         });
         return this.userRepository.save(newUser);
     }
+    async getUsername(id) {
+        try {
+            const user = await this.userRepository.findOne({ where: { id } });
+            const name = user.firstName;
+            return name;
+        }
+        catch (error) {
+            console.error("Couldn't find user ", error);
+        }
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

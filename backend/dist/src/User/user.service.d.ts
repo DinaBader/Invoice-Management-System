@@ -7,4 +7,5 @@ export declare class UserService {
     constructor(userRepository: Repository<User>, passwordService: PasswordService);
     findOne(username: string): Promise<User | undefined>;
     createUser(username: string, hashedPassword: string, firstName: string, lastName: string): Promise<User>;
+    getUsername(id: number): Promise<string>;
 }

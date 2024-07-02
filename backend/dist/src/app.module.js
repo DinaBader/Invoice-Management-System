@@ -35,7 +35,7 @@ exports.AppModule = AppModule = __decorate([
                     password: configService.get('DB_PASSWORD'),
                     database: configService.get('DB_NAME'),
                     entities: [(0, path_1.join)(process.cwd(), 'dist/**/*.entity.js')],
-                    synchronize: false,
+                    synchronize: true,
                 }),
                 inject: [config_1.ConfigService],
             }),
