@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-drawer></app-drawer>
+    <app-drawer @toggle-snackbar="toggleSnackbar"></app-drawer>
     <Search @search="handleSearch"></Search>
 
     <v-main>
@@ -82,6 +82,7 @@ export default {
       isDialogOpenDelete: false,
       selectedInvoice: null,
       selectedInvoiceToDelete: null,
+      showSnackbar: false,
     };
   },
   created() {
@@ -141,6 +142,9 @@ export default {
           return item.Status.toLowerCase().includes(searchItem.toLowerCase());
         })  
       }
+    },
+    toggleSnackbar(show) {
+      this.showSnackbar = show;
     }
   },
 };

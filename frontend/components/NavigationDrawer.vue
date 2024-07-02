@@ -37,7 +37,12 @@
         },
         goToCreate(){
           console.log(" to create")
-        }
+        },
+        drawerToggled() {
+      if (!this.drawer) {
+        this.$emit('toggle-snackbar', true); 
+      }
+    }
     }
   };
   </script>

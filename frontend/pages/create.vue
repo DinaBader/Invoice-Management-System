@@ -17,6 +17,7 @@
                 v-model="total"
                 :rules="rules"
                 label="Total"
+                type="number"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
@@ -24,6 +25,7 @@
                 v-model="received"
                 :rules="rules"
                 label="Received"
+                type="number"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
@@ -31,6 +33,7 @@
                 v-model="remaining"
                 :rules="rules"
                 label="Remaining"
+                type="number"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">

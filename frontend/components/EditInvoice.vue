@@ -7,11 +7,10 @@
       <v-card-text>
         <v-form>
           <v-text-field v-model="localInvoice.CustomerName" label="Customer Name"></v-text-field>
-          <v-text-field v-model="localInvoice.Description" label="Description"></v-text-field>
           <v-text-field v-model="localInvoice.Status" label="Status"></v-text-field>
-          <v-text-field v-model="localInvoice.Received" label="Received"></v-text-field>
-          <v-text-field v-model="localInvoice.Remaining" label="Remaining"></v-text-field>
-          <v-text-field v-model="localInvoice.Total" label="Total"></v-text-field>
+          <v-text-field v-model="localInvoice.Received" label="Received" type="number"></v-text-field>
+          <v-text-field v-model="localInvoice.Remaining" label="Remaining" type="number"></v-text-field>
+          <v-text-field v-model="localInvoice.Total" label="Total" type="number"></v-text-field>
           <v-text-field v-model="localInvoice.DueDate" label="Due Date"></v-text-field>
         </v-form>
       </v-card-text>
