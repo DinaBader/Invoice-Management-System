@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <app-drawer></app-drawer>
-    <Search></Search>
+    <Search @search="handleSearch"></Search>
 
     <v-main>
       <v-container>
@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in invoices" :key="item.id">
+            <tr v-for="item in filteredInvoices" :key="item.id">
               <td>{{ item.id }}</td>
               <td>{{ item.CustomerName }}</td>
               <td>{{ item.Status }}</td>
@@ -77,6 +77,7 @@ export default {
   data() {
     return {
       invoices: [],
+      filteredInvoices: [],
       isDialogOpen: false,
       isDialogOpenDelete: false,
       selectedInvoice: null,
@@ -98,6 +99,7 @@ export default {
 
         if (response.data) {
           this.invoices = response.data;
+          this.filteredInvoices = response.data;
         } else {
           console.error('response.data is undefined');
         }
@@ -130,6 +132,16 @@ export default {
       this.isDialogOpenDelete = false;
       this.selectedInvoiceToDelete = null;
     },
+    handleSearch(searchItem){
+      if(searchItem.trim()===''){
+        this.filteredInvoices=this.invoices;
+      }
+      else{
+        this.filteredInvoices = this.invoices.filter(item=>{
+          return item.Status.toLowerCase().includes(searchItem.toLowerCase());
+        })  
+      }
+    }
   },
 };
 </script>
@@ -140,7 +152,7 @@ export default {
   vertical-align: middle;
 }
 .description-cell {
-  max-width: 300px; /* Adjust the max-width as per your layout */
+  max-width: 300px; 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

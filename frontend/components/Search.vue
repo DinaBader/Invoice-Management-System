@@ -9,7 +9,7 @@
           :loading="loading"
           append-inner-icon="mdi-magnify"
           density="standard"
-          label="Search by name,due date..."
+          label="Search by status, name..."
           variant="solo"
           hide-details
           single-line
@@ -30,12 +30,7 @@
   
       methods: {
         onClick () {
-          this.loading = true
-            console.log(this.searchItem);
-          setTimeout(() => {
-            this.loading = false
-            this.loaded = true
-          }, 2000)
+            this.$emit('search', this.searchItem);
         },
       },
     }
