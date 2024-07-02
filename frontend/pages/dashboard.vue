@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <app-drawer></app-drawer>
+    <Search></Search>
 
     <v-main>
       <v-container>
@@ -65,6 +66,7 @@ import axios from 'axios';
 import EditInvoice from '@/components/EditInvoice.vue';
 import DeleteInvoice from '@/components/DeleteInvoice.vue';
 import AppDrawer from '@/components/NavigationDrawer.vue'; 
+import Search from '@/components/Search.vue'
 
 export default {
   components: {
