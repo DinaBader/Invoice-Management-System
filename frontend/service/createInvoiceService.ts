@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-export async function createInvoice(CustomerName: string, Description: string, Total: number, Received: number,  Remaining: number,Status:string) {
+export async function createInvoice(CustomerName: string, Total: number, Received: number, Remaining: number,Status:string, DueDate: string) {
     try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.post("http://localhost:3000/Invoice", {
-            Description,
             CustomerName,
             Total,
             Received,
             Remaining,
-            Status
+            Status,
+            DueDate
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

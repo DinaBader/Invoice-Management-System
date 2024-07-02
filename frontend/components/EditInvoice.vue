@@ -12,6 +12,7 @@
           <v-text-field v-model="localInvoice.Received" label="Received"></v-text-field>
           <v-text-field v-model="localInvoice.Remaining" label="Remaining"></v-text-field>
           <v-text-field v-model="localInvoice.Total" label="Total"></v-text-field>
+          <v-text-field v-model="localInvoice.DueDate" label="Due Date"></v-text-field>
         </v-form>
       </v-card-text>
       <v-card-actions>

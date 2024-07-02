@@ -14,13 +14,6 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
-                v-model="itemdescription"
-                :rules="rules"
-                label="Item Description"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field
                 v-model="total"
                 :rules="rules"
                 label="Total"
@@ -38,6 +31,13 @@
                 v-model="remaining"
                 :rules="rules"
                 label="Remaining"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                v-model="duedate"
+                :rules="rules"
+                label="Due Date"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
@@ -65,11 +65,11 @@
     data() {
       return {
         customername: '',
-        itemdescription: '',
         total: '',
         received: '',
         remaining: '',
         status: '', 
+        duedate:'',
         rules: [value => !!value || 'Required.']
       }
     },
@@ -85,11 +85,11 @@
             try {
             await createInvoice(
                 this.customername,
-                this.itemdescription,
                 this.total,
                 this.received,
                 this.remaining,
-                this.status
+                this.status,
+                this.duedate
             );
 
             this.$router.push({ path: '/dashboard' });

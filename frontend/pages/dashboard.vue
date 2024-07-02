@@ -4,16 +4,19 @@
 
     <v-main>
       <v-container>
+        <v-row>
+          <v-col cols="12">
         <v-table>
           <thead>
             <tr>
               <th class="text-left">Invoice nbr</th>
               <th class="text-left">Customer Name</th>
-              <th class="text-left">Description</th>
               <th class="text-left">Status</th>
               <th class="text-left">Received</th>
               <th class="text-left">Remaining</th>
               <th class="text-left">Total</th>
+              <th class="text-left">Created At</th>
+              <th class="text-left">Due Date</th>
               <th class="text-left">Actions</th>
             </tr>
           </thead>
@@ -21,11 +24,12 @@
             <tr v-for="item in invoices" :key="item.id">
               <td>{{ item.id }}</td>
               <td>{{ item.CustomerName }}</td>
-              <td>{{ item.Description }}</td>
               <td>{{ item.Status }}</td>
               <td>{{ item.Received }}</td>
               <td>{{ item.Remaining }}</td>
               <td>{{ item.Total }}</td>
+              <td>{{ item.createdAt }}</td>
+              <td>{{ item.DueDate }}</td>
               <td>
                 <v-icon @click="openDeleteDialog(item)" class="icon-spacing">mdi-delete</v-icon>
                 <v-icon @click="openEditDialog(item)" class="icon-spacing">mdi-pencil</v-icon>
@@ -33,6 +37,8 @@
             </tr>
           </tbody>
         </v-table>
+      </v-col>
+    </v-row>
       </v-container>
     </v-main>
 
@@ -131,4 +137,11 @@ export default {
   margin-right: 8px;
   vertical-align: middle;
 }
+.description-cell {
+  max-width: 300px; /* Adjust the max-width as per your layout */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 </style>
