@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer :width="220" app   image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg">
+    <v-navigation-drawer :width="220" app   image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg" >
       <v-list>
         <v-list-item>
           <v-list-item-content>

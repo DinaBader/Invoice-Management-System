@@ -10,7 +10,7 @@
                             <v-text-field v-model="userName" label="Username" :rules="usernameRules"></v-text-field>
                             <v-text-field v-model="firstName" label="Firstname" :rules="firstnameRules"></v-text-field>
                             <v-text-field v-model="lastName" label="Lastname" :rules="lastnameRules"></v-text-field>
-                            <v-text-field v-model="password" label="Password " :rules="passwordRules"></v-text-field>
+                            <v-text-field v-model="password" label="Password " :rules="passwordRules" type="password"></v-text-field>
                             <v-btn class="mt-2" type="submit" block>Submit</v-btn>
                             <NuxtLink to="/">
                             <v-btn class="register-button" >Login </v-btn>
