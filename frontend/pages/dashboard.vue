@@ -92,17 +92,24 @@ export default {
     async getInvoices() {
       try {
         const token = localStorage.getItem('accessToken');
-        const response = await axios.get('http://localhost:3000/Invoice/get', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        if(!token){
+          console.log("Unauthorized");
+          this.$router.push({path:'/'});
+        }
+        else{
 
-        if (response.data) {
-          this.invoices = response.data;
-          this.filteredInvoices = response.data;
-        } else {
-          console.error('response.data is undefined');
+          const response = await axios.get('http://localhost:3000/Invoice/get', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+  
+          if (response.data) {
+            this.invoices = response.data;
+            this.filteredInvoices = response.data;
+          } else {
+            console.error('response.data is undefined');
+          }
         }
       } catch (error) {
         console.error('Error fetching data:', error);

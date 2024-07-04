@@ -3,7 +3,7 @@
       <v-list>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Welcome </v-list-item-title>
+            <v-list-item-title>Welcome</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -21,8 +21,10 @@
   </template>
   
   <script>
+
   export default {
     name: 'AppDrawer',
+    user:'',
     methods:{
         logout(){
             try{
@@ -39,10 +41,10 @@
           console.log(" to create")
         },
         drawerToggled() {
-      if (!this.drawer) {
-        this.$emit('toggle-snackbar', true); 
-      }
-    }
+          if (!this.drawer) {
+            this.$emit('toggle-snackbar', true); 
+          }
+        },
     }
   };
   </script>
