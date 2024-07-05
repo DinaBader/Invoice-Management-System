@@ -1,46 +1,67 @@
 <template>
   <v-app>
-    <app-drawer @toggle-snackbar="toggleSnackbar"></app-drawer>
-    <Search @search="handleSearch"></Search>
+    <v-app-bar color="blue-grey" :elevation="2" >
+      <template v-slot:prepend>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      </template>
+      <v-app-bar-title>Invoice Managment</v-app-bar-title>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" app width="220" image="https://www.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_16164564.htm#query=blue%20gray%20background&position=3&from_view=keyword&track=ais_user&uuid=60c043b3-1a6d-48d5-aecb-135bfd6a51b7">
+      <v-list>
+        <NuxtLink to="/dashboard" @click="goToDashboard" class="custom-link">
+          <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="inbox"></v-list-item>
+        </NuxtLink>
+        <NuxtLink to="/create" @click="goToCreate" class="custom-link">
+          <v-list-item prepend-icon="mdi-plus" title="Create Invoice" value="createInvoice"></v-list-item>
+        </NuxtLink>
+        <NuxtLink to="/" @click="logout" class="custom-link">
+          <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout"></v-list-item>
+        </NuxtLink>
+      </v-list>
+    </v-navigation-drawer>
+
 
     <v-main>
       <v-container>
         <v-row>
           <v-col cols="12">
-        <v-table>
-          <thead>
-            <tr>
-              <th class="text-left">Invoice nbr</th>
-              <th class="text-left">Customer Name</th>
-              <th class="text-left">Status</th>
-              <th class="text-left">Received</th>
-              <th class="text-left">Remaining</th>
-              <th class="text-left">Total</th>
-              <th class="text-left">Created At</th>
-              <th class="text-left">Due Date</th>
-              <th class="text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in filteredInvoices" :key="item.id">
-              <td>{{ item.id }}</td>
-              <td>{{ item.CustomerName }}</td>
-              <td>{{ item.Status }}</td>
-              <td>{{ item.Received }}</td>
-              <td>{{ item.Remaining }}</td>
-              <td>{{ item.Total }}</td>
-              <td>{{ item.createdAt }}</td>
-              <td>{{ item.DueDate }}</td>
-              <td>
-                <v-icon @click="openDeleteDialog(item)" class="icon-spacing">mdi-delete</v-icon>
-                <v-icon @click="openEditDialog(item)" class="icon-spacing">mdi-pencil</v-icon>
-              </td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-col>
-    </v-row>
+            <v-table>
+              <thead>
+                <tr>
+                  <th class="text-left">Invoice nbr</th>
+                  <th class="text-left">Customer Name</th>
+                  <th class="text-left">Status</th>
+                  <th class="text-left">Received</th>
+                  <th class="text-left">Remaining</th>
+                  <th class="text-left">Total</th>
+                  <th class="text-left">Created At</th>
+                  <th class="text-left">Due Date</th>
+                  <th class="text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in filteredInvoices" :key="item.id">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.CustomerName }}</td>
+                  <td>{{ item.Status }}</td>
+                  <td>{{ item.Received }}</td>
+                  <td>{{ item.Remaining }}</td>
+                  <td>{{ item.Total }}</td>
+                  <td>{{ item.createdAt }}</td>
+                  <td>{{ item.DueDate }}</td>
+                  <td>
+                    <v-icon @click="openDeleteDialog(item)" class="icon-spacing">mdi-delete</v-icon>
+                    <v-icon @click="openEditDialog(item)" class="icon-spacing">mdi-pencil</v-icon>
+                  </td>
+                </tr>
+              </tbody>
+            </v-table>
+          </v-col>
+        </v-row>
       </v-container>
+      <Search @search="handleSearch"></Search>
+
     </v-main>
 
     <edit-invoice
@@ -65,14 +86,15 @@
 import axios from 'axios';
 import EditInvoice from '@/components/EditInvoice.vue';
 import DeleteInvoice from '@/components/DeleteInvoice.vue';
-import AppDrawer from '@/components/NavigationDrawer.vue'; 
-import Search from '@/components/Search.vue'
+import AppDrawer from '@/components/NavigationDrawer.vue';
+import Search from '@/components/Search.vue';
 
 export default {
   components: {
     EditInvoice,
     DeleteInvoice,
-    AppDrawer, 
+    AppDrawer,
+    Search,
   },
   data() {
     return {
@@ -83,6 +105,7 @@ export default {
       selectedInvoice: null,
       selectedInvoiceToDelete: null,
       showSnackbar: false,
+      drawer: false,
     };
   },
   created() {
@@ -92,18 +115,16 @@ export default {
     async getInvoices() {
       try {
         const token = localStorage.getItem('accessToken');
-        if(!token){
-          console.log("Unauthorized");
-          this.$router.push({path:'/'});
-        }
-        else{
-
+        if (!token) {
+          console.log('Unauthorized');
+          this.$router.push({ path: '/' });
+        } else {
           const response = await axios.get('http://localhost:3000/Invoice/get', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-  
+
           if (response.data) {
             this.invoices = response.data;
             this.filteredInvoices = response.data;
@@ -140,19 +161,31 @@ export default {
       this.isDialogOpenDelete = false;
       this.selectedInvoiceToDelete = null;
     },
-    handleSearch(searchItem){
-      if(searchItem.trim()===''){
-        this.filteredInvoices=this.invoices;
-      }
-      else{
-        this.filteredInvoices = this.invoices.filter(item=>{
+    handleSearch(searchItem) {
+      if (searchItem.trim() === '') {
+        this.filteredInvoices = this.invoices;
+      } else {
+        this.filteredInvoices = this.invoices.filter((item) => {
           return item.Status.toLowerCase().includes(searchItem.toLowerCase());
-        })  
+        });
       }
     },
     toggleSnackbar(show) {
       this.showSnackbar = show;
-    }
+    },
+    goToDashboard() {
+      console.log('to dashboard');
+    },
+    goToCreate() {
+      console.log('to create');
+    },
+    logout() {
+      try {
+        localStorage.removeItem('accessToken');
+      } catch (error) {
+        console.error('couldnt remove token', error);
+      }
+    },
   },
 };
 </script>
@@ -163,10 +196,17 @@ export default {
   vertical-align: middle;
 }
 .description-cell {
-  max-width: 300px; 
+  max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.custom-link {
+  color: inherit;
+  text-decoration: none;
+}
 
+.navigation{
+  background: url("@/assets/dashboard-background.jpg")
+}
 </style>
