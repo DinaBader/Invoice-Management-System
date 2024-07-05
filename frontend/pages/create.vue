@@ -1,68 +1,70 @@
 <template>
   <v-app>
     <app-drawer></app-drawer>
-    <v-container fluid class="main-container">
-      <v-sheet class="mx-auto create-container" max-width="800">
-        <p class="header">Create Invoice</p>
-        <v-form ref="CreateInvoiceForm" v-model="formValid" @submit.prevent="submitForm">
-          <v-row>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="customername"
-                :rules="[rules.required]"
-                label="Customer Name"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="total"
-                :rules="[rules.required, rules.number]"
-                label="Total"
-                type="number"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="received"
-                :rules="[rules.required, rules.number]"
-                label="Received"
-                type="number"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="remaining"
-                :rules="[rules.required, rules.number]"
-                label="Remaining"
-                type="number"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="duedate"
-                :rules="[rules.required]"
-                label="Due Date"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-select
-                v-model="status"
-                :items="['Paid', 'Pending', 'Financed']"
-                :rules="[rules.required]"
-                label="Status"
-                required
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-btn class="mt-2" type="submit" block :disabled="!formValid">Submit</v-btn>
-        </v-form>
-      </v-sheet>
-    </v-container>
+    <v-main>
+      <v-container fluid class="main-container">
+        <v-sheet class="mx-auto create-container" max-width="800">
+          <p class="header">Create Invoice</p>
+          <v-form ref="CreateInvoiceForm" v-model="formValid" @submit.prevent="submitForm">
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="customername"
+                  :rules="[rules.required]"
+                  label="Customer Name"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="total"
+                  :rules="[rules.required, rules.number]"
+                  label="Total"
+                  type="number"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="received"
+                  :rules="[rules.required, rules.number]"
+                  label="Received"
+                  type="number"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="remaining"
+                  :rules="[rules.required, rules.number]"
+                  label="Remaining"
+                  type="number"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="duedate"
+                  :rules="[rules.required]"
+                  label="Due Date"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-select
+                  v-model="status"
+                  :items="statusOptions"
+                  :rules="[rules.required]"
+                  label="Status"
+                  required
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-btn class="mt-2" type="submit" block :disabled="!formValid">Submit</v-btn>
+          </v-form>
+        </v-sheet>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
@@ -86,7 +88,8 @@ export default {
       rules: {
         required: value => !!value || 'Required.',
         number: value => !isNaN(value) || 'Must be a number.'
-      }
+      },
+      statusOptions: ['Pending', 'Paid', 'Overdue', 'Cancelled', 'Financed'],
     }
   },
   methods: {
@@ -116,7 +119,7 @@ export default {
 <style>
 @import '@/style/login.css';
 .main-container {
-  height: 100vh;
+  height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;

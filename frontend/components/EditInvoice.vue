@@ -7,7 +7,11 @@
       <v-card-text>
         <v-form>
           <v-text-field v-model="localInvoice.CustomerName" label="Customer Name"></v-text-field>
-          <v-text-field v-model="localInvoice.Status" label="Status"></v-text-field>
+          <v-select
+            v-model="localInvoice.Status"
+            :items="statusOptions"
+            label="Status"
+          ></v-select>
           <v-text-field v-model="localInvoice.Received" label="Received" type="number"></v-text-field>
           <v-text-field v-model="localInvoice.Remaining" label="Remaining" type="number"></v-text-field>
           <v-text-field v-model="localInvoice.Total" label="Total" type="number"></v-text-field>
@@ -41,6 +45,7 @@ export default {
     return {
       dialogVisible: this.isDialogOpen,
       localInvoice: { ...this.invoice },
+       statusOptions: ['Pending', 'Paid', 'Overdue', 'Cancelled','Financed'],
     };
   },
   watch: {
@@ -60,7 +65,6 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Updated invoice:', response.data);
         this.$router.go(0);
         this.$emit('update:isDialogOpen', false);
       } catch (error) {
@@ -75,5 +79,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add scoped styles if needed */
+/*vfdgfd*/
 </style>

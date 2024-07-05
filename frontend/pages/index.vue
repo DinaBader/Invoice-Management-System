@@ -57,7 +57,6 @@
       async handleLogin() {
         const isValid = this.$refs.loginForm.validate();
         if (!isValid) {
-          console.log('Form is not valid');
           return;
         }
         try {

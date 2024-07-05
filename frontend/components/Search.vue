@@ -23,7 +23,6 @@
   <script>
     export default {
       data: () => ({
-        loaded: false,
         loading: false,
         searchItem:''
       }),
@@ -36,11 +35,11 @@
     }
   </script>
 
-  <style>
+<style>
 
-    .custom-search-field {
+  .custom-search-field {
     width: 300px; 
     height: 48px; 
     font-size: 16px;
-}
+  }
 </style>

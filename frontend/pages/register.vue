@@ -67,7 +67,6 @@
             }
             try{
                 const accessToken = await RegisterUser(this.firstName, this.password,this.lastName,this.userName);
-                console.log('Access Token:', accessToken); 
                 localStorage.setItem('accessToken',accessToken);
                 this.$router.push({ path: '/dashboard' });
             }catch(error){
