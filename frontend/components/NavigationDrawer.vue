@@ -4,9 +4,17 @@
       <template v-slot:prepend>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       </template>
-      <v-app-bar-title>Invoice Management</v-app-bar-title>
+      <div class="app-bar-content">
+        <v-app-bar-title>Invoice Management</v-app-bar-title>
+        <v-spacer></v-spacer>
+        <div class="search-container" v-if="showSearch">
+          <Search @search="handleSearch"  :allInvoices="invoices" />
+        </div>
+        <v-btn icon @click="toggleSearch">
+          <v-icon>{{ showSearch ? 'mdi-close' : 'mdi-magnify' }}</v-icon>
+        </v-btn>
+      </div>
     </v-app-bar>
-
     <v-navigation-drawer v-model="drawer" app width="220" class="navigation-drawer">
       <v-list>
         <NuxtLink to="/dashboard" @click="goToDashboard" class="custom-link">
@@ -24,18 +32,22 @@
 </template>
 
 <script>
+import Search from '@/components/Search.vue';
+
 export default {
+  components: {
+    Search,
+  },
   data() {
     return {
       drawer: false,
+      showSearch: false,
     };
   },
+  props: ['invoices'],
   methods: {
-    goToDashboard() {
-      console.log('to dashboard');
-    },
-    goToCreate() {
-      console.log('to create');
+    toggleSearch() {
+      this.showSearch = !this.showSearch;
     },
     logout() {
       try {
@@ -44,6 +56,10 @@ export default {
       } catch (error) {
         console.error('couldnt remove token', error);
       }
+    },
+    handleSearch(filteredInvoices) {
+      console.log('Received filtered invoices:', filteredInvoices);
+      this.filteredInvoices = filteredInvoices;
     },
   },
 };
@@ -55,7 +71,18 @@ export default {
   text-decoration: none;
 }
 
-.navigation-drawer{
-  background:url('../assets/dashboard-background.jpg')
+.navigation-drawer {
+  background: url('../assets/dashboard-background.jpg');
+}
+
+.app-bar-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-container {
+  flex: 1;
+  margin-left: 16px;
 }
 </style>

@@ -6,41 +6,42 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-table>
-              <thead>
-                <tr>
-                  <th class="text-left">Invoice nbr</th>
-                  <th class="text-left">Customer Name</th>
-                  <th class="text-left">Status</th>
-                  <th class="text-left">Received</th>
-                  <th class="text-left">Remaining</th>
-                  <th class="text-left">Total</th>
-                  <th class="text-left">Created At</th>
-                  <th class="text-left">Due Date</th>
-                  <th class="text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in filteredInvoices" :key="item.id">
-                  <td>{{ item.id }}</td>
-                  <td>{{ item.CustomerName }}</td>
-                  <td>{{ item.Status }}</td>
-                  <td>{{ item.Received }}</td>
-                  <td>{{ item.Remaining }}</td>
-                  <td>{{ item.Total }}</td>
-                  <td>{{ item.createdAt }}</td>
-                  <td>{{ item.DueDate }}</td>
-                  <td>
-                    <v-icon @click="openDeleteDialog(item)" class="icon-spacing">mdi-delete</v-icon>
-                    <v-icon @click="openEditDialog(item)" class="icon-spacing">mdi-pencil</v-icon>
-                  </td>
-                </tr>
-              </tbody>
-            </v-table>
+            <div class="table-container">
+              <v-table>
+                <thead>
+                  <tr>
+                    <th class="text-left">Invoice nbr</th>
+                    <th class="text-left">Customer Name</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-left">Received</th>
+                    <th class="text-left">Remaining</th>
+                    <th class="text-left">Total</th>
+                    <th class="text-left">Created At</th>
+                    <th class="text-left">Due Date</th>
+                    <th class="text-left">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in filteredInvoices" :key="item.id">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.CustomerName }}</td>
+                    <td>{{ item.Status }}</td>
+                    <td>{{ item.Received }}</td>
+                    <td>{{ item.Remaining }}</td>
+                    <td>{{ item.Total }}</td>
+                    <td>{{ item.createdAt }}</td>
+                    <td>{{ item.DueDate }}</td>
+                    <td>
+                      <v-icon @click="openDeleteDialog(item)" class="icon-spacing">mdi-delete</v-icon>
+                      <v-icon @click="openEditDialog(item)" class="icon-spacing">mdi-pencil</v-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </v-table>
+            </div>
           </v-col>
         </v-row>
       </v-container>
-      <Search @search="handleSearch"></Search>
     </v-main>
 
     <edit-invoice
@@ -61,18 +62,17 @@
   </v-app>
 </template>
 
+
 <script>
-import axios from 'axios';
+import {getInvoices} from '../service/getInvoicesService';
 import EditInvoice from '@/components/EditInvoice.vue';
 import DeleteInvoice from '@/components/DeleteInvoice.vue';
-import Search from '@/components/Search.vue';
 import AppBarNavigation from '@/components/NavigationDrawer.vue';
 
 export default {
   components: {
     EditInvoice,
     DeleteInvoice,
-    Search,
     AppBarNavigation,
   },
   data() {
@@ -86,30 +86,14 @@ export default {
     };
   },
   created() {
-    this.getInvoices();
+    this.loadInvoices();
   },
   methods: {
-    async getInvoices() {
-      try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          this.$router.push({ path: '/' });
-        } else {
-          const response = await axios.get('http://localhost:3000/Invoice/get', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.data) {
-            this.invoices = response.data;
-            this.filteredInvoices = response.data;
-          } else {
-            console.error('response.data is undefined');
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    async loadInvoices() {
+      const invoices = await getInvoices(this.$router);
+      if (invoices) {
+        this.invoices = invoices;
+        this.filteredInvoices = invoices;
       }
     },
     openEditDialog(invoice) {
@@ -134,15 +118,16 @@ export default {
       this.isDialogOpenDelete = false;
       this.selectedInvoiceToDelete = null;
     },
-    handleSearch(searchItem) {
-      if (searchItem.trim() === '') {
+    handleSearch(filteredInvoices) {
+      if (searchTerm.trim() === '') {
         this.filteredInvoices = this.invoices;
       } else {
-        this.filteredInvoices = this.invoices.filter((item) => {
-          return item.Status.toLowerCase().includes(searchItem.toLowerCase());
+        this.filteredInvoices = this.invoices.filter(invoice => {
+          return invoice.CustomerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                 invoice.Status.toLowerCase().includes(searchTerm.toLowerCase());
         });
       }
-    },
+    }
   },
 };
 </script>
@@ -151,5 +136,10 @@ export default {
 .icon-spacing {
   margin-right: 8px;
   vertical-align: middle;
+}
+
+.table-container {
+  height: 400px; 
+  overflow-y: auto;
 }
 </style>
