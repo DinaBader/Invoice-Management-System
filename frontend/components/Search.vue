@@ -19,7 +19,7 @@
 
 <script>
 import { getInvoiceByStatus } from '@/service/getInvoicesService';
-
+import {getInvoices} from '@/service/getInvoicesService'
 export default {
   data: () => ({
     loading: false,
@@ -30,7 +30,8 @@ export default {
       this.loading = true;
     try {
       if (this.searchItem.trim() === '') {
-        this.$emit('search', this.allInvoices); 
+        const filteredInvoices = await getInvoices();
+        this.$emit('search', filteredInvoices); 
       } else {
         const filteredInvoices = await getInvoiceByStatus(this.searchItem, this.$router);
         this.$emit('search', filteredInvoices);

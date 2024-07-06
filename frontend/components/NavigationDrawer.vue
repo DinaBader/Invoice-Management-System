@@ -42,6 +42,7 @@ export default {
     return {
       drawer: false,
       showSearch: false,
+      filteredInvoices: []
     };
   },
   props: ['invoices'],
@@ -60,6 +61,7 @@ export default {
     handleSearch(filteredInvoices) {
       console.log('Received filtered invoices:', filteredInvoices);
       this.filteredInvoices = filteredInvoices;
+      this.$emit('search', filteredInvoices);
     },
   },
 };

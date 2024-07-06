@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <AppBarNavigation />
+    <AppBarNavigation  @search="handleSearch" :invoices="invoices"/>
 
     <v-main>
       <v-container>
@@ -131,15 +131,14 @@ export default {
       this.selectedInvoiceToDelete = null;
     },
     handleSearch(searchTerm) {
-      if (searchTerm.trim() === '') {
+      if(searchTerm===""){
         this.filteredInvoices = this.invoices;
-      } else {
-        this.filteredInvoices = this.invoices.filter(invoice => {
-          return invoice.CustomerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                 invoice.Status.toLowerCase().includes(searchTerm.toLowerCase());
-        });
       }
-    }
+      else{
+
+        this.filteredInvoices = searchTerm; 
+      }
+    },
   },
 };
 </script>
