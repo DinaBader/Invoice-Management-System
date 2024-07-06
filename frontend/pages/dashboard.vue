@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <AppBarNavigation  @search="handleSearch" :invoices="invoices"/>
-
     <v-main>
       <v-container>
         <v-row>
@@ -10,7 +9,6 @@
               <div v-if="error" class="error-box">
                 <div class="error-message">{{ error }}</div>
               </div>
-
               <v-table>
                 <thead>
                   <tr>
@@ -131,13 +129,7 @@ export default {
       this.selectedInvoiceToDelete = null;
     },
     handleSearch(searchTerm) {
-      if(searchTerm===""){
-        this.filteredInvoices = this.invoices;
-      }
-      else{
-
-        this.filteredInvoices = searchTerm; 
-      }
+      this.filteredInvoices = searchTerm; 
     },
   },
 };
@@ -150,7 +142,7 @@ export default {
 }
 
 .table-container {
-  height: 400px;
+  height: 480px;
   overflow-y: auto;
 }
 

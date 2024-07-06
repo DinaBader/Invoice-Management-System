@@ -5,7 +5,7 @@
         :loading="loading"
         append-inner-icon="mdi-magnify"
         density="standard"
-        label="Search by status, name..."
+        label="Search by status"
         variant="solo"
         hide-details
         single-line
