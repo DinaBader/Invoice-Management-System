@@ -7,6 +7,10 @@
         <v-row>
           <v-col cols="12">
             <div class="table-container">
+              <div v-if="error" class="error-box">
+                <div class="error-message">{{ error }}</div>
+              </div>
+
               <v-table>
                 <thead>
                   <tr>
@@ -62,9 +66,8 @@
   </v-app>
 </template>
 
-
 <script>
-import {getInvoices} from '../service/getInvoicesService';
+import { getInvoices } from '../service/getInvoicesService';
 import EditInvoice from '@/components/EditInvoice.vue';
 import DeleteInvoice from '@/components/DeleteInvoice.vue';
 import AppBarNavigation from '@/components/NavigationDrawer.vue';
@@ -83,6 +86,7 @@ export default {
       isDialogOpenDelete: false,
       selectedInvoice: null,
       selectedInvoiceToDelete: null,
+      error: null
     };
   },
   created() {
@@ -94,7 +98,15 @@ export default {
       if (invoices) {
         this.invoices = invoices;
         this.filteredInvoices = invoices;
+      } else {
+        this.showError('Unauthorized. Redirecting');
       }
+    },
+    showError(errorMessage) {
+      this.error = errorMessage;
+    },
+    dismissError() {
+      this.error = null;
     },
     openEditDialog(invoice) {
       this.selectedInvoice = invoice;
@@ -118,7 +130,7 @@ export default {
       this.isDialogOpenDelete = false;
       this.selectedInvoiceToDelete = null;
     },
-    handleSearch(filteredInvoices) {
+    handleSearch(searchTerm) {
       if (searchTerm.trim() === '') {
         this.filteredInvoices = this.invoices;
       } else {
@@ -139,7 +151,27 @@ export default {
 }
 
 .table-container {
-  height: 400px; 
+  height: 400px;
   overflow-y: auto;
 }
+
+.error-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #bb0101;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-message {
+  font-size: 16px;
+  color: #f5f5f5;
+}
+
 </style>
