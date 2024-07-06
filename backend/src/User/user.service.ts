@@ -15,7 +15,6 @@ export class UserService{
 
     async findOne(username: string): Promise<User | undefined> {
       const user = await this.userRepository.findOne({ where: { username } });
-      console.log(`User found: ${JSON.stringify(user)}`);
       return user;
     }
     async createUser(

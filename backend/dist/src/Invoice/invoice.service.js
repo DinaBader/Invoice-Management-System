@@ -57,7 +57,7 @@ let InvoiceService = class InvoiceService {
     async getInvoiceByStatus(status) {
         try {
             const invoices = await this.invoiceRepository.find();
-            const filteredInvoices = invoices.filter(invoice => invoice.Status === status);
+            const filteredInvoices = invoices.filter(invoice => invoice.Status.toLowerCase() === status.toLowerCase());
             return filteredInvoices;
         }
         catch (error) {

@@ -44,17 +44,19 @@ export class InvoiceService{
         }
     }
 
-    async getInvoiceByStatus(status:String){
-        try{
-            const invoices=await this.invoiceRepository.find();
-            const filteredInvoices =invoices.filter(invoice=>invoice.Status === status);
-            return filteredInvoices ;
-        }catch(error){
-            console.error("Error fetching invoices by status:", error);
-            throw error;
+    async getInvoiceByStatus(status: string) {
+        try {
+          const invoices = await this.invoiceRepository.find();
+          const filteredInvoices = invoices.filter(invoice => 
+            invoice.Status.toLowerCase() === status.toLowerCase()
+          );
+          return filteredInvoices;
+        } catch (error) {
+          console.error("Error fetching invoices by status:", error);
+          throw error;
         }
-    }
-
+      }
+      
     async deleteInvoice(id:number){
         try{
             const invoice=await this.invoiceRepository.findOne({where:{id}});

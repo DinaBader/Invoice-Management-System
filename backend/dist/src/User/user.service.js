@@ -25,7 +25,6 @@ let UserService = class UserService {
     }
     async findOne(username) {
         const user = await this.userRepository.findOne({ where: { username } });
-        console.log(`User found: ${JSON.stringify(user)}`);
         return user;
     }
     async createUser(username, hashedPassword, firstName, lastName) {
