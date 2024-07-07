@@ -19,7 +19,7 @@
 
 <script>
 import { getInvoiceByStatus } from '@/service/getInvoicesService';
-import {getInvoices} from '@/service/getInvoicesService'
+import { getInvoices } from '@/service/getInvoicesService';
 export default {
   data: () => ({
     loading: false,
@@ -28,21 +28,21 @@ export default {
   methods: {
     async onClick() {
       this.loading = true;
-    try {
-      if (this.searchItem.trim() === '') {
-        const filteredInvoices = await getInvoices();
-        this.$emit('search', filteredInvoices); 
-      } else {
-        const filteredInvoices = await getInvoiceByStatus(this.searchItem, this.$router);
-        this.$emit('search', filteredInvoices);
+      try {
+        if (this.searchItem.trim() === '') {
+          const filteredInvoices = await getInvoices();
+          this.$emit('search', filteredInvoices);
+        } else {
+          const filteredInvoices = await getInvoiceByStatus(this.searchItem, this.$router);
+          this.$emit('search', filteredInvoices);
+        }
+      } catch (error) {
+        console.error("Error fetching invoices by status:", error);
+        this.$emit('search', []);
+      } finally {
+        this.loading = false;
       }
-    } catch (error) {
-      console.error("Error fetching invoices by status:", error);
-      this.$emit('search', []);
-    } finally {
-      this.loading = false;
     }
-  }
   }
 };
 </script>
@@ -52,5 +52,21 @@ export default {
   width: 100%;
   height: 48px;
   font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .custom-search-field {
+    height: 56px;
+    width:200px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .custom-search-field {
+    height: 25px;
+    width:200px;
+    font-size: 20px;
+  }
 }
 </style>

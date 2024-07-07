@@ -5,10 +5,10 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       </template>
       <div class="app-bar-content">
-        <v-app-bar-title>Invoice Management</v-app-bar-title>
+        <v-app-bar-title class="title">Invoice Management</v-app-bar-title>
         <v-spacer></v-spacer>
         <div class="search-container" v-if="showSearch">
-          <Search @search="handleSearch"  :allInvoices="invoices" />
+          <Search @search="handleSearch" :allInvoices="invoices" />
         </div>
         <v-btn icon @click="toggleSearch">
           <v-icon>{{ showSearch ? 'mdi-close' : 'mdi-magnify' }}</v-icon>
@@ -42,7 +42,6 @@ export default {
     return {
       drawer: false,
       showSearch: false,
-      filteredInvoices: []
     };
   },
   props: ['invoices'],
@@ -86,5 +85,19 @@ export default {
 .search-container {
   flex: 1;
   margin-left: 16px;
+}
+
+@media (max-width: 600px) {
+  .app-bar-content {
+    flex-wrap: wrap;
+  }
+
+  .title{
+    font-size:90%;
+  }
+  .search-container {
+    width: 100%;
+    margin: 8px 0;
+  }
 }
 </style>
