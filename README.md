@@ -8,6 +8,12 @@ This repository contains the source code for an Invoice Management System built 
 
 - Docker installed on your machine
 
+### Increase git buffer size
+
+```bash
+git config --global http.postBuffer 524288000
+```
+
 ### Clone the Repository
 
 Clone the repository to your local machine:
