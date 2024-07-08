@@ -6,10 +6,5 @@ export class Usercontroller{
     constructor(
         private readonly userService:UserService
     ){}
-    
-    @Get(":id")
-    getUsername(@Param("id") id:number){
-        return this.userService.getUsername(id);
-    }
-    
+        
 }

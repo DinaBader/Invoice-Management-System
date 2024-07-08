@@ -1,0 +1,4 @@
+node_modules
+test
+.prettierrc
+npm-debug.log
