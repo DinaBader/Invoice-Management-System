@@ -1,14 +1,17 @@
-FROM node:14-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-RUN apk update && apk upgrade
-RUN apk add git
+RUN apk update && apk upgrade \
+    && apk add --no-cache git
 
-COPY ./package*.json /app/
-
-RUN npm install && npm cache clean --force
+COPY package*.json ./
+RUN npm install
 
 COPY . .
 
-ENV PATH ./node_modules/.bin/:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+EXPOSE 8000
+
+CMD ["npm", "run", "dev"]
