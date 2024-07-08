@@ -15,6 +15,8 @@ Clone the repository to your local machine:
 ```bash
 git clone https://github.com/DinaBader/Invoice-Management-System.git
 ```
+Change to the correct directory
+
 ```bash
 cd Invoice-Management-System
 ```
