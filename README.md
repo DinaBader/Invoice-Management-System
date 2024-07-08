@@ -14,8 +14,11 @@ Clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/DinaBader/Invoice-Management-System.git
+```
+```bash
 cd Invoice-Management-System
 ```
+
 
 ### Build the Docker Container
 
