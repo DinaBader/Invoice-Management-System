@@ -19,7 +19,7 @@ cd Invoice-Management-System
 
 ### Build the Docker Container
 
-in your terminal execute the command 
+In your terminal execute the command 
 
 ```bash
 docker-compose build
@@ -27,8 +27,10 @@ docker-compose build
 
 ### Run the Docker Container
 
+In your terminal execute the command 
+
 ```bash
 docker-compose up
 ```
 
-Open your browser and open localhost:8000 it should work
+Navigate to `http://localhost:8000` in your web browser to access the Invoice Management System.
