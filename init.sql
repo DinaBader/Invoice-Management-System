@@ -1,8 +1,22 @@
-CREATE TABLE IF NOT EXISTS users(
+CREATE DATABASE IF NOT EXISTS `invoice-management-system`;
+
+USE `invoice-management-system`;
+
+CREATE TABLE IF NOT EXISTS `user` (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(255) NOT NULL,
-    Password VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) NOT NULL,
-    FirstName VARCHAR(255) NOT NULL,
-    LastName VARCHAR(255) NOT NULL
+    username VARCHAR(255) UNIQUE NOT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `Invoice` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerName VARCHAR(255) NOT NULL,
+    Status VARCHAR(255) NOT NULL,
+    Total INT NOT NULL,
+    Received INT NOT NULL,
+    Remaining INT NOT NULL,
+    DueDate VARCHAR(255) NOT NULL,
+    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
